@@ -1,5 +1,6 @@
 package application.models.order;
 
+import application.controller.processingServices.OrderProcessingService;
 import application.models.customer.CustomerIdentification;
 
 import java.time.LocalDate;
@@ -22,11 +23,11 @@ public class Order {
     }
 
     private Payment createOrderPayment(){
-
+        return new Payment(0);
     }
 
     private double calculateTotalPrice(){
-
+        return 0;
     }
 
     private void finalizeOrder(OrderProcessingService processor){

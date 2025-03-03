@@ -8,7 +8,7 @@ public abstract class User {
     }
 
     public ShoppingCart createCart(){
-
+        return new ShoppingCart();
     }
 
     public void resetCart(){

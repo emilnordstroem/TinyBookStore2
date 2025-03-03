@@ -5,16 +5,16 @@ public class Quantity {
     private int quantity;
     private QuantityStatus quantityStatus;
 
-    public Quantity(int quantity, QuantityStatus quantityStatus) {
+    public Quantity(int quantity) {
         this.quantity = quantity;
-        this.quantityStatus = quantityStatus;
+        updateQuantity(quantity);
     }
 
     public static int getThreshold() {
         return threshold;
     }
 
-    public int getQuantity() {
+    public int getAvailableQuantity(){
         return quantity;
     }
 
@@ -22,15 +22,27 @@ public class Quantity {
         return quantityStatus;
     }
 
-    public void updateQuantity(int quantity){
-
+    public void updateQuantity(int quantity) {
+        this.quantity += quantity;
     }
 
-    private void updateQuantityStatus(){
-
+    private void updateQuantityStatus(QuantityStatus quantityStatus){
+        int availableQuantity = getAvailableQuantity();
+        if(availableQuantity > threshold){
+            this.quantityStatus = QuantityStatus.HIGHSTOCK;
+        } else if (availableQuantity < threshold) {
+            this.quantityStatus = QuantityStatus.LOWSTOCK;
+            lowStockAlert();
+        } else if (availableQuantity == 0) {
+            this.quantityStatus = QuantityStatus.OUTOFSTOCK;
+        }
     }
 
-    public void lowStockAlert(){
+    public static void setThreshold(int threshold) {
+        Quantity.threshold = threshold;
+    }
 
+    private void lowStockAlert(){
+        System.out.println("CONCERN: LOW STOCK");
     }
 }

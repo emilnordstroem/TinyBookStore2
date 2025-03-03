@@ -11,6 +11,10 @@ public class Dimensions {
         this.weight = weight;
     }
 
+    public double getArea(){
+        return height * width;
+    }
+
     public double getHeight() {
         return height;
     }

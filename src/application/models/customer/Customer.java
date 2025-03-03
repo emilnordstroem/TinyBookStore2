@@ -1,5 +1,6 @@
 package application.models.customer;
 
+import application.controller.processingServices.OrderPlacementService;
 import application.models.customer.address.Address;
 import application.models.order.Order;
 import application.models.user.User;

@@ -2,6 +2,7 @@ package application.models.user;
 
 import application.models.book.ISBN;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
@@ -11,7 +12,7 @@ public class ShoppingCart {
     }
 
     public CartItem createCartItem(ISBN isbn, int quantity){
-
+        return new CartItem(isbn, quantity);
     }
 
     public void addItem(CartItem item){
@@ -23,10 +24,10 @@ public class ShoppingCart {
     }
 
     public double calculatePrice(){
-
+        return 0;
     }
 
     public List<CartItem> getCartItems() {
-
+        return new ArrayList<>();
     }
 }

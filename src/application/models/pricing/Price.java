@@ -5,18 +5,27 @@ public class Price {
     private double discountedPrice;
     private Discount discount;
 
-    public Price(double originalPrice, Discount discount) {
+    public Price(double originalPrice) {
         this.originalPrice = originalPrice;
-        this.discountedPrice = discountedPrice;
-        this.discount = discount;
     }
 
     private double getCurrentPrice(){
-
+        if(discount != null){
+            return discountedPrice;
+        }
+        return originalPrice;
     }
 
-    private void applyDiscount(){
+    public void applyDiscount(Discount discount){
+        if(this.discount != null){
+            removeDiscount();
+        }
+        this.discount = discount;
+        discountedPrice = discount.discountedPrice(originalPrice);
+    }
 
+    public void removeDiscount(){
+        discount = null;
     }
 
     public double getOriginalPrice() {
@@ -29,5 +38,9 @@ public class Price {
 
     public Discount getDiscount() {
         return discount;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
     }
 }

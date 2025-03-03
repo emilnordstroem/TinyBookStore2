@@ -12,7 +12,7 @@ public class OrderLine {
     }
 
     private double getOrderLinePrice(){
-
+        return 0;
     }
 
     public ISBN getOrderedBook() {

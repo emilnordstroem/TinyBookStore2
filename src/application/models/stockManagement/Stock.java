@@ -6,12 +6,13 @@ public class Stock {
     private final ISBN isbn;
     private Quantity quantity;
 
-    public Stock(ISBN isbn) {
+    public Stock(ISBN isbn, int quantity) {
         this.isbn = isbn;
+        this.quantity = createQuantity(quantity);
     }
 
     public Quantity createQuantity (int quantity) {
-
+        return new Quantity(quantity);
     }
 
     public ISBN getIsbn() {

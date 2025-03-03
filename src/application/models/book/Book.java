@@ -2,7 +2,7 @@ package application.models.book;
 
 import application.models.pricing.Price;
 
-public class Book {
+public class Book implements Searchable<String> {
     private final ISBN isbn;
     private final Description description;
     private final Entities authorAndPublisher;
@@ -35,5 +35,19 @@ public class Book {
 
     public ISBN getIsbn() {
         return isbn;
+    }
+
+    public void setDimensions(Dimensions dimensions) {
+        this.dimensions = dimensions;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
+    @Override
+    public boolean matched(String keyword) {
+        return description.matched(keyword)
+                || authorAndPublisher.matched(keyword);
     }
 }
