@@ -22,6 +22,30 @@ public class Order {
         this.payment = createOrderPayment();
     }
 
+    public static int getOrderId() {
+        return orderId;
+    }
+
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
+    }
+
+    public LocalDate getPlacementDate() {
+        return placementDate;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public CustomerIdentification getCustomer() {
+        return customer;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
     private Payment createOrderPayment(){
         return new Payment(0);
     }

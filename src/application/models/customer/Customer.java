@@ -24,8 +24,8 @@ public class Customer extends User {
 
     }
 
-    public int getIdentification() {
-        return identification.getCustomerId();
+    public CustomerIdentification getIdentification() {
+        return identification;
     }
 
     public CustomerDetails getDetails() {
