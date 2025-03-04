@@ -12,7 +12,7 @@ public abstract class User {
     }
 
     public void resetCart(){
-
+        cart.resetShippingCart();
     }
 
     public ShoppingCart getCart() {

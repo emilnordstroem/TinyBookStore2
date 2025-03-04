@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
-    private List<CartItem> cartItems;
+    private List<CartItem> cartItems = new ArrayList<>();
 
     public ShoppingCart() {
     }
@@ -16,18 +16,29 @@ public class ShoppingCart {
     }
 
     public void addItem(CartItem item){
-
+        for(CartItem currentItem : cartItems){
+            if(currentItem.getIsbn() == item.getIsbn()){
+                currentItem.updateQuantity(item.getQuantity());
+                break;
+            }
+        }
+        cartItems.add(item);
     }
 
     public void removeItem(CartItem item){
-
+        cartItems.remove(item);
     }
 
+    // possible when storage is implemented
     public double calculatePrice(){
         return 0;
     }
 
     public List<CartItem> getCartItems() {
-        return new ArrayList<>();
+        return new ArrayList<>(cartItems);
+    }
+
+    public void resetShippingCart(){
+        this.cartItems = new ArrayList<>();
     }
 }

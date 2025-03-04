@@ -20,6 +20,8 @@ public class CartItem {
     }
 
     public void updateQuantity(int quantity) {
-
+        if((this.quantity + quantity) >= 1){
+            this.quantity += quantity;
+        }
     }
 }
