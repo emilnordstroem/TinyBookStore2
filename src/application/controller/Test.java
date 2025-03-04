@@ -1,9 +1,9 @@
 package application.controller;
 
-import application.controller.processingServices.OrderPlacementService;
-import application.models.customer.Customer;
 import application.models.pricing.Discount;
 import application.models.pricing.Price;
+import application.models.user.Guest;
+import application.models.user.User;
 
 public class Test {
 
@@ -18,10 +18,6 @@ public class Test {
         System.out.println(price1.getOriginalPrice());
         price1.applyDiscount(discount);
         System.out.println(price1.getDiscountedPrice());
-
-        OrderPlacementService placementService = new OrderPlacementService();
-
-
     }
 
 }
