@@ -5,12 +5,13 @@ import application.models.customer.address.Address;
 import application.models.order.Order;
 import application.models.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Customer extends User {
     private final CustomerIdentification identification;
     private final CustomerDetails details;
-    private List<Address> addresses;
+    private final List<Address> addresses = new ArrayList<>();
     private final List<Order> orders;
 
     public Customer(CustomerDetails details, Address address, List<Order> orders) {

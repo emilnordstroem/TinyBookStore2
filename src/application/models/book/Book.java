@@ -2,7 +2,9 @@ package application.models.book;
 
 import application.models.pricing.Price;
 
-public class Book implements Searchable<String> {
+import java.util.Comparator;
+
+public class Book implements Searchable<String>, Comparable<Book> {
     private final ISBN isbn;
     private final Description description;
     private final Entities authorAndPublisher;
@@ -49,5 +51,10 @@ public class Book implements Searchable<String> {
     public boolean matched(String keyword) {
         return description.matched(keyword)
                 || authorAndPublisher.matched(keyword);
+    }
+
+    @Override
+    public int compareTo(Book otherBook) {
+        return this.description.getTitle().compareTo(otherBook.getDescription().getTitle());
     }
 }

@@ -9,7 +9,7 @@ public class Price {
         this.originalPrice = originalPrice;
     }
 
-    private double getCurrentPrice(){
+    public double getCurrentPrice(){
         if(discount != null){
             return discountedPrice;
         }

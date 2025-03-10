@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class OrderPlacementService {
 
-    public Order placeOrder(Customer customer){
+    public static Order placeOrder(Customer customer){
         ArrayList<CartItem> shoppingCartItem = new ArrayList<>(customer.getCart().getCartItems());
         ArrayList<OrderLine> orderLines = new ArrayList<>();
 
