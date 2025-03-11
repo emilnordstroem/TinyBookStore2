@@ -1,4 +1,4 @@
-package application.controller.searching;
+package application.controller.searchingServices;
 
 import application.models.book.Searchable;
 
