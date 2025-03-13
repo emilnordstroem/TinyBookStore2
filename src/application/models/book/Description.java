@@ -1,34 +1,55 @@
 package application.models.book;
 
-import java.security.Key;
 import java.time.Year;
 
 public class Description implements Searchable<String>{
     private String title;
-    private enum Type {
-        HARDCOVER, PAPERBACK, EBOOK
-    };
-    private enum Genre {
-        FICTION, NONFICTION
-    };
+    private Type type;
+    private Genre genre;
     private String pages;
-    private enum Language {
-        DANISH, ENGLISH
-    };
+    private Language language;
     private Year publicationYear;
 
-    public Description(String title, String pages, Year publicationYear) {
+    public Description(String title, Type type, Genre genre,
+                       String pages, Language language, Year publicationYear) {
         this.title = title;
+        this.type = type;
+        this.genre = genre;
         this.pages = pages;
+        this.language = language;
         this.publicationYear = publicationYear;
+    }
+
+    public enum Type {
+        HARDCOVER, PAPERBACK, EBOOK
+    }
+
+    public enum Genre {
+        FICTION, NONFICTION
+    }
+
+    public enum Language {
+        DANISH, ENGLISH
     }
 
     public String getTitle() {
         return title;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
     public String getPages() {
         return pages;
+    }
+
+    public Language getLanguage() {
+        return language;
     }
 
     public Year getPublicationYear() {

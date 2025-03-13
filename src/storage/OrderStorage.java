@@ -4,6 +4,7 @@ import application.models.order.Order;
 import application.models.order.OrderLine;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class OrderStorage {
 
@@ -31,6 +32,7 @@ public class OrderStorage {
 
             addOrderStoredProcedure.executeUpdate();
 
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {
@@ -56,12 +58,11 @@ public class OrderStorage {
                     case 3 -> addOrderLineStoredProcedure.setInt(parameter, orderLine.getOrderedQuantity());
                 }
             }
-
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
-
         }
     }
 

@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CustomerStorage {
 
@@ -32,6 +30,7 @@ public class CustomerStorage {
                 }
             }
             addCustomerStoredProcedure.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {
@@ -52,6 +51,9 @@ public class CustomerStorage {
             addCustomerStoredProcedure.clearParameters();
             addCustomerStoredProcedure.setInt(1, customer.getIdentification().getCustomerId());
             addCustomerStoredProcedure.executeUpdate();
+
+            connection.close();
+
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {
