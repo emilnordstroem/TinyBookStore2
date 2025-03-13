@@ -2,8 +2,6 @@ package application.models.book;
 
 import application.models.pricing.Price;
 
-import java.util.Comparator;
-
 public class Book implements Searchable<String>, Comparable<Book> {
     private final ISBN isbn;
     private final Description description;

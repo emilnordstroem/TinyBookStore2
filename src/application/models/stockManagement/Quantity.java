@@ -7,7 +7,7 @@ public class Quantity {
 
     public Quantity(int quantity) {
         this.quantity = quantity;
-        updateQuantity(quantity);
+        updateQuantityStatus();
     }
 
     public static int getThreshold() {
@@ -24,9 +24,10 @@ public class Quantity {
 
     public void updateQuantity(int quantity) {
         this.quantity += quantity;
+
     }
 
-    private void updateQuantityStatus(QuantityStatus quantityStatus){
+    private void updateQuantityStatus(){
         int availableQuantity = getAvailableQuantity();
         if(availableQuantity > threshold){
             this.quantityStatus = QuantityStatus.HIGHSTOCK;

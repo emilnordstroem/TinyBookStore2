@@ -3,11 +3,17 @@ package storage;
 import application.models.book.*;
 import application.models.pricing.Discount;
 import application.models.pricing.Price;
+import application.models.stockManagement.Stock;
+
 import java.sql.*;
 import java.time.Year;
 import java.util.ArrayList;
 
 public class BookStorage {
+
+    public static void addBook(Book book){
+        //TODO - issue of finding out if the discount and description is already in the database
+    }
 
     public static ArrayList<Book> retrieveAllBooks(){
         ArrayList<Book> books = new ArrayList<>();
@@ -62,6 +68,38 @@ public class BookStorage {
             throw new RuntimeException(e);
         }
         return books;
+    }
+
+    public static ArrayList<Stock> retrieveAllBookStock(){
+        ArrayList<Stock> bookStocks = new ArrayList<>();
+        try{
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
+            );
+
+            PreparedStatement retrieveAllBookStocksStoredProcedure = connection.prepareStatement(
+                    "EXEC PROC RetrieveAllBookStocks"
+            );
+
+            ResultSet retrievedBookStocks = retrieveAllBookStocksStoredProcedure.executeQuery();
+
+            while(retrievedBookStocks.next()){
+                Stock stock = new Stock(
+                        new ISBN(retrievedBookStocks.getString(1)),
+                        retrievedBookStocks.getInt(2)
+                );
+                stock.createQuantity(retrievedBookStocks.getInt(2));
+                bookStocks.add(stock);
+            }
+
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getCause() + " " + e.getMessage());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+        return bookStocks;
     }
 
 }

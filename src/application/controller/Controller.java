@@ -1,13 +1,14 @@
 package application.controller;
 
 import application.controller.processingServices.OrderPlacementService;
-import application.models.book.Book;
+import application.models.book.*;
 import application.models.customer.Customer;
 import application.models.customer.CustomerDetails;
 import application.models.customer.address.Address;
 import application.models.order.Order;
 import application.models.order.OrderLine;
 import application.models.order.OrderStatus;
+import application.models.pricing.Price;
 import storage.BookStorage;
 import storage.CustomerStorage;
 import storage.OrderStorage;
@@ -37,6 +38,10 @@ public class Controller {
         return order;
     }
 
-
+    public static Book createBook(ISBN isbn, Description description, Entities entities, Dimensions dimensions, Price price){
+        Book book = new Book(isbn, description, entities, dimensions, price);
+        BookStorage.addBook(book);
+        return book;
+    }
 
 }
