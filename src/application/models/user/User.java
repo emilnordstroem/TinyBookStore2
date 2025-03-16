@@ -1,7 +1,7 @@
 package application.models.user;
 
 public abstract class User {
-    private ShoppingCart cart;
+    private final ShoppingCart cart;
 
     public User() {
         this.cart = createCart();

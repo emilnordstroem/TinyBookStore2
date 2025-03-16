@@ -14,8 +14,12 @@ public class Quantity {
         return threshold;
     }
 
-    public int getAvailableQuantity(){
+    public int getQuantity() {
         return quantity;
+    }
+
+    public int getAvailableQuantity(int requestedQuantity){
+        return Math.min(requestedQuantity, quantity);
     }
 
     public QuantityStatus getQuantityStatus() {
@@ -24,11 +28,11 @@ public class Quantity {
 
     public void updateQuantity(int quantity) {
         this.quantity += quantity;
-
+        updateQuantityStatus();
     }
 
     private void updateQuantityStatus(){
-        int availableQuantity = getAvailableQuantity();
+        int availableQuantity = quantity;
         if(availableQuantity > threshold){
             this.quantityStatus = QuantityStatus.HIGHSTOCK;
         } else if (availableQuantity < threshold) {

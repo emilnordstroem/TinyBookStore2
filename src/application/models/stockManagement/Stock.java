@@ -4,7 +4,7 @@ import application.models.book.ISBN;
 
 public class Stock {
     private final ISBN isbn;
-    private Quantity quantity;
+    private final Quantity quantity;
 
     public Stock(ISBN isbn, int quantity) {
         this.isbn = isbn;

@@ -9,7 +9,13 @@ public class Payment {
         this.status = PaymentStatus.PENDING;
     }
 
-    // should include operations of changing status
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void updatePaymentStatus(PaymentStatus status){
+        this.status = status;
+    }
 
     public double getAmount() {
         return amount;
