@@ -30,7 +30,7 @@ public class Controller {
     }
 
     public static Order createOrder(Customer customer){
-        Order order = OrderPlacementService.placeOrder(customer);
+        Order order = customer.createOrder(new OrderPlacementService());
         OrderStorage.addOrder(order);
         for(OrderLine orderLine : order.getOrderLines()){
             OrderStorage.addOrderLine(order.getId(), orderLine);

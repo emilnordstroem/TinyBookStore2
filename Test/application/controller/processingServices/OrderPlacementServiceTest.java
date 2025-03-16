@@ -29,7 +29,7 @@ class OrderPlacementServiceTest {
 
     @Test
     void placeOrder() {
-        Order order = OrderPlacementService.placeOrder(customer);
+        Order order = customer.createOrder(new OrderPlacementService());
         int actualResult = order.getOrderLines().size();
         assertEquals(1, actualResult);
     }
