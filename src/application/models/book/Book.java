@@ -54,6 +54,14 @@ public class Book implements Searchable<String>, Comparable<Book> {
                 || authorAndPublisher.matched(keyword);
     }
 
+    public int compareToPublicationYear(Book otherBook){
+        return this.getDescription().compareTo(otherBook.getDescription());
+    }
+
+    public int compareToCurrentPrice(Book otherBook){
+        return this.getPrice().compareTo(otherBook.getPrice());
+    }
+
     @Override
     public int compareTo(Book otherBook) {
         return this.description.getTitle().compareTo(otherBook.getDescription().getTitle());

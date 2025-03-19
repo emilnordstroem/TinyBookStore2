@@ -1,6 +1,6 @@
 package application.models.pricing;
 
-public class Price {
+public class Price implements Comparable<Price> {
     private double originalPrice;
     private double discountedPrice;
     private Discount discount;
@@ -42,5 +42,10 @@ public class Price {
 
     public void setOriginalPrice(double originalPrice) {
         this.originalPrice = originalPrice;
+    }
+
+    @Override
+    public int compareTo(Price otherPrice) {
+        return (int) getCurrentPrice() - (int) otherPrice.getCurrentPrice();
     }
 }

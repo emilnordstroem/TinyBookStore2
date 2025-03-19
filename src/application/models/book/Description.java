@@ -2,7 +2,7 @@ package application.models.book;
 
 import java.time.Year;
 
-public class Description implements Searchable<String>{
+public class Description implements Searchable<String>, Comparable<Description>{
     private String title;
     private Type type;
     private Genre genre;
@@ -73,5 +73,10 @@ public class Description implements Searchable<String>{
     @Override
     public boolean matched(String keyword) {
         return title.toLowerCase().compareTo(keyword.toLowerCase()) == 0;
+    }
+
+    @Override
+    public int compareTo(Description otherDescription) {
+        return publicationYear.compareTo(otherDescription.getPublicationYear());
     }
 }

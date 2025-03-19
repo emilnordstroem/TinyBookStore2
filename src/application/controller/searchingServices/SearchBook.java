@@ -15,13 +15,6 @@ public class SearchBook <T extends Searchable<String> & Comparable<T>> {
         executeSearch();
     }
 
-    // Only for testing purposes
-    public SearchBook(String searchWord, List<T> searchableItems) {
-        this.searchableItems = searchableItems; // Must retrieve items from storage
-        this.searchWord = searchWord;
-        executeSearch();
-    }
-
     private void executeSearch(){
         int middle = searchableItems.size() / 2;
         SearchAlgorithm<T> leftSideSearch = new SearchAlgorithm<T>(searchableItems.subList(0, middle), searchWord);
