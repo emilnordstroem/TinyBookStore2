@@ -6,6 +6,9 @@ public class Price implements Comparable<Price> {
     private Discount discount;
 
     public Price(double originalPrice) {
+        if(originalPrice < 0){
+            throw new IllegalArgumentException("OriginalPrice cannot be under 0");
+        }
         this.originalPrice = originalPrice;
     }
 
@@ -17,7 +20,9 @@ public class Price implements Comparable<Price> {
     }
 
     public void applyDiscount(Discount discount){
-        if(this.discount != null){
+        if(discount == null){
+            throw new NullPointerException();
+        } else if(this.discount != null){
             removeDiscount();
         }
         this.discount = discount;
