@@ -1,18 +1,17 @@
-package application.controller.sortingServices;
+package application.controller.sortServices;
 
 import application.models.book.Book;
-import application.models.book.Description;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewestSort {
+public class HighToLowSort {
 
-    public static List<Book> newestBookArrivalsSort(List<Book> unsortedBooks, int low, int high){
+    public static List<Book> highestToLowestPriceSort(List<Book> unsortedBooks, int low, int high){
         if(low < high){
             int indexOfPivotElement = partition(unsortedBooks, low, high);
-            newestBookArrivalsSort(unsortedBooks, low, indexOfPivotElement-1);
-            newestBookArrivalsSort(unsortedBooks, indexOfPivotElement + 1, high);
+            highestToLowestPriceSort(unsortedBooks, low, indexOfPivotElement - 1);
+            highestToLowestPriceSort(unsortedBooks, indexOfPivotElement + 1, high);
         }
         return new ArrayList<>(unsortedBooks);
     }
@@ -24,9 +23,9 @@ public class NewestSort {
 
         while(indexLow <= indexHigh){
             Book lowElement = unsortedList.get(indexLow);
-            if(lowElement.compareToPublicationYear(pivotElement) <= 0){
+            if(lowElement.compareToCurrentPrice(pivotElement) >= 0){
                 indexLow++;
-            } else if (lowElement.compareToPublicationYear(pivotElement) > 0) {
+            } else if (lowElement.compareToCurrentPrice(pivotElement) < 0) {
                 indexHigh--;
             } else {
                 swap(unsortedList, indexLow, indexHigh);

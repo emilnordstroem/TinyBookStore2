@@ -1,4 +1,4 @@
-package application.controller.sortingServices;
+package application.controller.sortServices;
 
 public enum SortSpecification {
     NEWESTARRIVALS,

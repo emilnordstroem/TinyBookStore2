@@ -1,7 +1,6 @@
-package application.controller.sortingServices;
+package application.controller.sortServices;
 
 import application.models.book.Book;
-import application.models.pricing.Price;
 
 import java.util.ArrayList;
 import java.util.List;
