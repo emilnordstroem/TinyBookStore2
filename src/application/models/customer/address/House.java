@@ -5,7 +5,11 @@ public class House extends Address {
 
     public House(String streetName, String buildingNo, int postalCode, String city, String country, String gateCode) {
         super(streetName, buildingNo, postalCode, city, country);
-        this.gateCode = gateCode;
+        if(gateCode == null){
+            this.gateCode = "";
+        } else {
+            this.gateCode = gateCode;
+        }
     }
 
     public String getGateCode() {

@@ -8,6 +8,12 @@ public abstract class Address {
     private final String country;
 
     public Address(String streetName, String buildingNo, int postalCode, String city, String country) {
+        if(streetName == null || buildingNo == null || city == null || country == null){
+            throw new NullPointerException("null passed to address constructor");
+        } else if (streetName.isBlank() || buildingNo.isBlank() || String.valueOf(postalCode).length() != 4
+                || city.isBlank() || country.isBlank()) {
+            throw new IllegalArgumentException("missing input field or illegal argument passed");
+        }
         this.streetName = streetName;
         this.buildingNo = buildingNo;
         this.postalCode = postalCode;

@@ -1,4 +1,4 @@
-package application.controller;
+package application.controller.controller;
 
 import application.controller.processingServices.OrderPlacementService;
 import application.models.book.*;
@@ -7,14 +7,12 @@ import application.models.customer.CustomerDetails;
 import application.models.customer.address.Address;
 import application.models.order.Order;
 import application.models.order.OrderLine;
-import application.models.order.OrderStatus;
 import application.models.pricing.Price;
 import storage.BookStorage;
 import storage.CustomerStorage;
 import storage.OrderStorage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Controller {
 

@@ -17,6 +17,9 @@ public class Customer extends User {
     private final List<Order> orders;
 
     public Customer(CustomerDetails details, Address address, List<Order> orders) {
+        if(details == null || address == null || orders == null){
+            throw new NullPointerException("null passed to constructor");
+        }
         this.identification = new CustomerIdentification();
         this.details = details;
         setAddresses(address);
