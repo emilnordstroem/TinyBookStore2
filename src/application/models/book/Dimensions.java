@@ -6,6 +6,9 @@ public class Dimensions {
     private double weight;
 
     public Dimensions(double height, double width, double weight) {
+        if(height < 0 || width < 0 || weight < 0){
+            throw new IllegalArgumentException("negativ numeric value was passed");
+        }
         this.height = height;
         this.width = width;
         this.weight = weight;

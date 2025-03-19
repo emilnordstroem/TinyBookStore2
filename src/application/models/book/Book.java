@@ -10,6 +10,9 @@ public class Book implements Searchable<String>, Comparable<Book> {
     private Price price;
 
     public Book(ISBN isbn, Description description, Entities authorAndPublisher, Dimensions dimensions, Price price) {
+        if(isbn == null || description == null || authorAndPublisher == null || dimensions == null || price == null){
+            throw new NullPointerException("Argument passed in the constructor is null");
+        }
         this.isbn = isbn;
         this.description = description;
         this.authorAndPublisher = authorAndPublisher;

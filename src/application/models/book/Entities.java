@@ -7,6 +7,11 @@ public class Entities implements Searchable<String>{
     private String publisher;
 
     public Entities(String author, String publisher) {
+        if(author == null || publisher == null){
+            throw new NullPointerException("Null passed as argument in constructor");
+        } else if (author.isBlank() || publisher.isBlank()) {
+            throw new IllegalArgumentException("Author or Publisher is empty");
+        }
         this.author = author;
         this.publisher = publisher;
     }
