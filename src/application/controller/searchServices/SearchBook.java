@@ -1,24 +1,27 @@
 package application.controller.searchServices;
 
+import application.models.book.Book;
 import application.models.book.Searchable;
-import java.util.ArrayList;
+import storage.BookStorage;
 import java.util.List;
 
-public class SearchBook <T extends Searchable<String> & Comparable<T>> {
-    private final List<T> searchableItems;
+public class SearchBook {
+    private List<Book> searchableItems;
     private final String searchWord;
-    private List<T> searchResults;
+    private List<Book> searchResults;
 
     public SearchBook(String searchWord) {
-        this.searchableItems = new ArrayList<>(); // Must retrieve items from storage
+        if(searchWord == null){
+            throw new NullPointerException("searchWord == null");
+        }
+        this.searchableItems = BookStorage.retrieveAllBooks();
         this.searchWord = searchWord;
-        executeSearch();
     }
 
-    private void executeSearch(){
+    public void executeSearch(){
         int middle = searchableItems.size() / 2;
-        SearchAlgorithm<T> leftSideSearch = new SearchAlgorithm<T>(searchableItems.subList(0, middle), searchWord);
-        SearchAlgorithm<T> rightSideSearch = new SearchAlgorithm<T>(searchableItems.subList(middle, searchableItems.size()), searchWord);
+        SearchAlgorithm<Book> leftSideSearch = new SearchAlgorithm<>(searchableItems.subList(0, middle), searchWord);
+        SearchAlgorithm<Book> rightSideSearch = new SearchAlgorithm<>(searchableItems.subList(middle, searchableItems.size()), searchWord);
 
         try{
             leftSideSearch.start();
@@ -29,11 +32,15 @@ public class SearchBook <T extends Searchable<String> & Comparable<T>> {
             System.out.println(e.getCause() + " " + e.getMessage());
         }
 
-        TotalMergeAlgorithm<T> mergeLists = new TotalMergeAlgorithm<>(leftSideSearch.getMatches(), rightSideSearch.getMatches());
+        TotalMergeAlgorithm<Book> mergeLists = new TotalMergeAlgorithm<>(leftSideSearch.getMatches(), rightSideSearch.getMatches());
         searchResults = mergeLists.getMergedList();
     }
 
-    public List<T> getSearchResults() {
+    public List<Book> getSearchResults() {
         return searchResults;
+    }
+
+    public void setSearchableItems(List<Book> searchableItems) {
+        this.searchableItems = searchableItems;
     }
 }

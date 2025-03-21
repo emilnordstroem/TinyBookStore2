@@ -44,7 +44,7 @@ public class BookStorage {
             );
 
             PreparedStatement retrieveAllBooksStoredProcedure = connection.prepareStatement(
-                    "EXEC PROC RetrieveAllBooks"
+                    "{CALL RetrieveAllBooks}"
             );
 
             ResultSet retrievedBooks = retrieveAllBooksStoredProcedure.executeQuery();

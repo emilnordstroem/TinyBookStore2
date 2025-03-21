@@ -18,17 +18,16 @@ public class CustomerStorage {
             addCustomerStoredProcedure.clearParameters();
 
             try (connection) {
-
-            for(int parameter = 1; parameter <= 5; parameter++){
-                switch (parameter) {
-                case 1 -> addCustomerStoredProcedure.setInt(parameter, customer.getIdentification().getCustomerId());
-                case 2 -> addCustomerStoredProcedure.setString(parameter, customer.getDetails().getFirstName());
-                case 3 -> addCustomerStoredProcedure.setString(parameter, customer.getDetails().getLastName());
-                case 4 -> addCustomerStoredProcedure.setInt(parameter, customer.getDetails().getPhoneNo());
-                case 5 -> addCustomerStoredProcedure.setString(parameter, customer.getDetails().getEmail());
+                for(int parameter = 1; parameter <= 5; parameter++){
+                    switch (parameter) {
+                    case 1 -> addCustomerStoredProcedure.setInt(parameter, customer.getIdentification().getCustomerId());
+                    case 2 -> addCustomerStoredProcedure.setString(parameter, customer.getDetails().getFirstName());
+                    case 3 -> addCustomerStoredProcedure.setString(parameter, customer.getDetails().getLastName());
+                    case 4 -> addCustomerStoredProcedure.setInt(parameter, customer.getDetails().getPhoneNo());
+                    case 5 -> addCustomerStoredProcedure.setString(parameter, customer.getDetails().getEmail());
+                    }
                 }
-            }
-            addCustomerStoredProcedure.executeUpdate();
+                addCustomerStoredProcedure.executeUpdate();
             } catch (SQLIntegrityConstraintViolationException e) {
                 System.out.println("Constraint violation: " + e.getMessage());
             } finally {
@@ -38,7 +37,6 @@ public class CustomerStorage {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
-
         }
     }
 

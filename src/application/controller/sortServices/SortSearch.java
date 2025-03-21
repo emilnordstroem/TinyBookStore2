@@ -18,10 +18,9 @@ public class SortSearch {
         }
         this.listOfBooks = listOfBooks;
         this.specification = specification;
-        sortBookBySpecification();
     }
 
-    private void sortBookBySpecification(){
+    public void sortBookBySpecification(){
         switch (specification) {
             case NEWESTARRIVALS -> sortedBookList = NewestSort.newestBookArrivalsSort(listOfBooks, 0, listOfBooks.size() - 1);
             case LOWTOHIGH -> sortedBookList = LowToHighSort.lowestToHighestPriceSort(listOfBooks, 0, listOfBooks.size() - 1);
@@ -29,7 +28,7 @@ public class SortSearch {
         }
     }
 
-    public List<Book> getSortedBookList() {
+    public ArrayList<Book> getSortedBookList() {
         return new ArrayList<>(sortedBookList);
     }
 }
