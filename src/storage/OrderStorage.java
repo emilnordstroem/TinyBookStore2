@@ -18,20 +18,23 @@ public class OrderStorage {
             );
             addOrderStoredProcedure.clearParameters();
 
-            for(int parameter = 1; parameter <= 6; parameter++){
-                switch (parameter) {
-                    case 1 -> addOrderStoredProcedure.setInt(parameter, order.getId());
-                    case 2 -> addOrderStoredProcedure.setInt(parameter, order.getCustomer().getCustomerId());
-                    case 3 -> addOrderStoredProcedure.setDate(parameter, Date.valueOf(order.getPlacementDate()));
-                    case 4 -> addOrderStoredProcedure.setString(parameter, order.getStatus().toString());
-                    case 5 -> addOrderStoredProcedure.setDouble(parameter, order.getPayment().getAmount());
-                    case 6 -> addOrderStoredProcedure.setString(parameter, order.getPayment().getStatus().toString());
+            try (connection) {
+                for(int parameter = 1; parameter <= 6; parameter++){
+                    switch (parameter) {
+                        case 1 -> addOrderStoredProcedure.setInt(parameter, order.getId());
+                        case 2 -> addOrderStoredProcedure.setInt(parameter, order.getCustomer().getCustomerId());
+                        case 3 -> addOrderStoredProcedure.setDate(parameter, Date.valueOf(order.getPlacementDate()));
+                        case 4 -> addOrderStoredProcedure.setString(parameter, order.getStatus().toString());
+                        case 5 -> addOrderStoredProcedure.setDouble(parameter, order.getPayment().getAmount());
+                        case 6 -> addOrderStoredProcedure.setString(parameter, order.getPayment().getStatus().toString());
+                    }
                 }
+                addOrderStoredProcedure.executeUpdate();
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("Constraint violation: " + e.getMessage());
+            } finally {
+                connection.close();
             }
-
-            addOrderStoredProcedure.executeUpdate();
-
-            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {
@@ -46,18 +49,22 @@ public class OrderStorage {
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
             );
 
-            PreparedStatement addOrderLineStoredProcedure = connection.prepareStatement(
-                    "EXEC PROC AddOrderLine ?, ?, ?"
-            );
-
-            for(int parameter = 1; parameter <= 3; parameter++){
-                switch (parameter) {
-                    case 1 -> addOrderLineStoredProcedure.setInt(parameter, orderId);
-                    case 2 -> addOrderLineStoredProcedure.setString(parameter, orderLine.getOrderedBook().getIsbn());
-                    case 3 -> addOrderLineStoredProcedure.setInt(parameter, orderLine.getOrderedQuantity());
+            try (connection) {
+                PreparedStatement addOrderLineStoredProcedure = connection.prepareStatement(
+                        "EXEC PROC AddOrderLine ?, ?, ?"
+                );
+                for (int parameter = 1; parameter <= 3; parameter++) {
+                    switch (parameter) {
+                        case 1 -> addOrderLineStoredProcedure.setInt(parameter, orderId);
+                        case 2 ->
+                                addOrderLineStoredProcedure.setString(parameter, orderLine.getOrderedBook().getIsbn());
+                        case 3 -> addOrderLineStoredProcedure.setInt(parameter, orderLine.getOrderedQuantity());
+                    }
                 }
+                addOrderLineStoredProcedure.executeUpdate();
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("Constraint violation: " + e.getMessage());
             }
-            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {

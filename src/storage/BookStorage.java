@@ -14,6 +14,26 @@ public class BookStorage {
 
     public static void addBook(Book book){
         //TODO - issue of finding out if the discount and description is already in the database
+        // How to properly link a book to an id of a discount or description - retrieve ID?
+
+        try{
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
+            );
+
+            try (connection) {
+
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("Constraint violation: " + e.getMessage());
+            } finally {
+                connection.close();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getCause() + " " + e.getMessage());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static ArrayList<Book> retrieveAllBooks(){

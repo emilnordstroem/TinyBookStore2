@@ -2,10 +2,7 @@ package storage;
 
 import application.models.customer.Customer;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class CustomerStorage {
 
@@ -20,6 +17,8 @@ public class CustomerStorage {
             );
             addCustomerStoredProcedure.clearParameters();
 
+            try (connection) {
+
             for(int parameter = 1; parameter <= 5; parameter++){
                 switch (parameter) {
                 case 1 -> addCustomerStoredProcedure.setInt(parameter, customer.getIdentification().getCustomerId());
@@ -30,7 +29,11 @@ public class CustomerStorage {
                 }
             }
             addCustomerStoredProcedure.executeUpdate();
-            connection.close();
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("Constraint violation: " + e.getMessage());
+            } finally {
+                connection.close();
+            }
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {
@@ -49,11 +52,15 @@ public class CustomerStorage {
                     "EXEC PROC removeCustomer ?"
             );
             addCustomerStoredProcedure.clearParameters();
-            addCustomerStoredProcedure.setInt(1, customer.getIdentification().getCustomerId());
-            addCustomerStoredProcedure.executeUpdate();
 
-            connection.close();
-
+            try (connection) {
+                addCustomerStoredProcedure.setInt(1, customer.getIdentification().getCustomerId());
+                addCustomerStoredProcedure.executeUpdate();
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("Constraint violation: " + e.getMessage());
+            } finally {
+                connection.close();
+            }
         } catch (SQLException e) {
             System.out.println(e.getErrorCode() + " " + e.getMessage());
         } catch (RuntimeException e) {
