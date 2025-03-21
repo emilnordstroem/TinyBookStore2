@@ -17,15 +17,20 @@ public class ShoppingCart {
 
     public void addItem(CartItem item){
         for(CartItem currentItem : cartItems){
-            if(currentItem.getIsbn() == item.getIsbn()){
+            if(currentItem.getIsbn().getIsbn().equals(item.getIsbn().getIsbn())){
                 currentItem.updateQuantity(item.getQuantity());
-                break;
+                return;
             }
         }
         cartItems.add(item);
     }
 
     public void removeItem(CartItem item){
+        if(item == null){
+            throw new NullPointerException("item == null");
+        } else if (!cartItems.contains(item)){
+            throw new IllegalArgumentException("item isn't present in cartItems");
+        }
         cartItems.remove(item);
     }
 

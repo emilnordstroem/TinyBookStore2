@@ -7,4 +7,8 @@ public class Guest extends User{
         super();
         tempID += 1;
     }
+
+    public static int getTempID() {
+        return tempID;
+    }
 }
