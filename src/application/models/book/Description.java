@@ -4,17 +4,17 @@ import java.time.Year;
 
 public class Description implements Searchable<String>, Comparable<Description>{
     private String title;
-    private Type type;
-    private Genre genre;
+    private BookType type;
+    private BookGenre genre;
     private String pages;
-    private Language language;
+    private BookLanguage bookLanguage;
     private Year publicationYear;
 
-    public Description(String title, Type type, Genre genre,
-                       String pages, Language language, Year publicationYear) {
+    public Description(String title, BookType type, BookGenre genre,
+                       String pages, BookLanguage bookLanguage, Year publicationYear) {
 
         if(title == null || type == null || genre == null
-                || pages == null || language == null || publicationYear == null){
+                || pages == null || bookLanguage == null || publicationYear == null){
             throw new NullPointerException("constructor contains null");
         } else if(title.isEmpty()){
             throw new IllegalArgumentException("missing title");
@@ -30,31 +30,19 @@ public class Description implements Searchable<String>, Comparable<Description>{
         this.type = type;
         this.genre = genre;
         this.pages = pages;
-        this.language = language;
+        this.bookLanguage = bookLanguage;
         this.publicationYear = publicationYear;
-    }
-
-    public enum Type {
-        HARDCOVER, PAPERBACK, EBOOK
-    }
-
-    public enum Genre {
-        FICTION, NONFICTION
-    }
-
-    public enum Language {
-        DANISH, ENGLISH
     }
 
     public String getTitle() {
         return title;
     }
 
-    public Type getType() {
+    public BookType getType() {
         return type;
     }
 
-    public Genre getGenre() {
+    public BookGenre getGenre() {
         return genre;
     }
 
@@ -62,8 +50,8 @@ public class Description implements Searchable<String>, Comparable<Description>{
         return pages;
     }
 
-    public Language getLanguage() {
-        return language;
+    public BookLanguage getLanguage() {
+        return bookLanguage;
     }
 
     public Year getPublicationYear() {
