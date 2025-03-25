@@ -55,10 +55,10 @@ public class BookStorage {
                 );
                 Description description = new Description(
                         retrievedBooks.getString(2),
-                        Description.Type.valueOf(retrievedBooks.getString(3).toUpperCase()),
-                        Description.Genre.valueOf(retrievedBooks.getString(4).toUpperCase()),
+                        BookType.valueOf(retrievedBooks.getString(3).toUpperCase()),
+                        BookGenre.valueOf(retrievedBooks.getString(4).toUpperCase()),
                         retrievedBooks.getString(5),
-                        Description.Language.valueOf(retrievedBooks.getString(6).toLowerCase()),
+                        BookLanguage.valueOf(retrievedBooks.getString(6).toLowerCase()),
                         Year.of(retrievedBooks.getInt(7))
                         );
                 Entities entities = new Entities(

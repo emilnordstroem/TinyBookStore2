@@ -21,10 +21,10 @@ class SearchBookTest {
                 new ISBN("1234567891123"),
                 new Description(
                         String.format("Book%d", bookNo),
-                        Description.Type.HARDCOVER,
-                        Description.Genre.NONFICTION,
+                        BookType.HARDCOVER,
+                        BookGenre.NONFICTION,
                         "0",
-                        Description.Language.DANISH,
+                        BookLanguage.DANISH,
                         Year.now()),
                 new Entities(String.format("Author%d", bookNo), "Test"),
                 new Dimensions(0, 0, 0),
