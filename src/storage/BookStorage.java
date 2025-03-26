@@ -12,26 +12,45 @@ import java.util.Objects;
 
 public class BookStorage {
 
-    public static void addBook(Book book){
-        //TODO - issue of finding out if the discount and description is already in the database
+    public static void addBook(Book book, Stock stock) {
+        // TODO - issue of finding out if the discount and description is already in the database
         // How to properly link a book to an id of a discount or description - retrieve ID?
+        try {
 
-        try{
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
             );
 
-            try (connection) {
+            PreparedStatement addBookStoredProcedure = connection.prepareStatement(
+                    "EXEC PROC AddBook ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"
+            );
+            addBookStoredProcedure.clearParameters();
 
+            try (connection) {
+                for (int parameter = 1; parameter <= 11; parameter++) {
+                    switch (parameter) {
+                        case 1 -> addBookStoredProcedure.setString(parameter, book.getIsbn().getIsbn());
+                        case 2 -> addBookStoredProcedure.setInt(parameter, book.getDescription().getId());
+                        case 3 -> addBookStoredProcedure.setString(parameter, book.getAuthorAndPublisher().getAuthor());
+                        case 4 -> addBookStoredProcedure.setString(parameter, book.getAuthorAndPublisher().getPublisher());
+                        case 5 -> addBookStoredProcedure.setDouble(parameter, book.getDimensions().getHeight());
+                        case 6 -> addBookStoredProcedure.setDouble(parameter, book.getDimensions().getWeight());
+                        case 7 -> addBookStoredProcedure.setDouble(parameter, book.getDimensions().getWidth());
+                        case 8 -> addBookStoredProcedure.setInt(parameter, stock.getQuantity().getQuantity());
+                        case 9 -> addBookStoredProcedure.setString(parameter, stock.getQuantity().getQuantityStatus().name());
+                        case 10 -> addBookStoredProcedure.setInt(parameter, book.getPrice().getDiscount().getId());
+                        case 11 -> addBookStoredProcedure.setDouble(parameter, book.getPrice().getCurrentPrice());
+                    }
+                }
             } catch (SQLIntegrityConstraintViolationException e) {
                 System.out.println("Constraint violation: " + e.getMessage());
             } finally {
                 connection.close();
             }
 
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             throw new RuntimeException(e.getCause() + " " + e.getMessage());
-        } catch (RuntimeException e) {
+        } catch(RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
@@ -54,25 +73,26 @@ public class BookStorage {
                         retrievedBooks.getString(1)
                 );
                 Description description = new Description(
-                        retrievedBooks.getString(2),
-                        BookType.valueOf(retrievedBooks.getString(3).toUpperCase()),
-                        BookGenre.valueOf(retrievedBooks.getString(4).toUpperCase()),
-                        retrievedBooks.getString(5),
-                        BookLanguage.valueOf(retrievedBooks.getString(6).toLowerCase()),
-                        Year.of(retrievedBooks.getInt(7))
+                        retrievedBooks.getInt(2),
+                        retrievedBooks.getString(3),
+                        BookType.valueOf(retrievedBooks.getString(4).toUpperCase()),
+                        BookGenre.valueOf(retrievedBooks.getString(5).toUpperCase()),
+                        retrievedBooks.getString(6),
+                        BookLanguage.valueOf(retrievedBooks.getString(7).toLowerCase()),
+                        Year.of(retrievedBooks.getInt(8))
                         );
                 Entities entities = new Entities(
-                        retrievedBooks.getString(8),
-                        retrievedBooks.getString(9)
+                        retrievedBooks.getString(9),
+                        retrievedBooks.getString(10)
                 );
                 Dimensions dimensions = new Dimensions(
-                        retrievedBooks.getDouble(10),
                         retrievedBooks.getDouble(11),
-                        retrievedBooks.getDouble(12)
+                        retrievedBooks.getDouble(12),
+                        retrievedBooks.getDouble(13)
                 );
-                Price price = new Price(13);
+                Price price = new Price(14);
                 try{
-                    Discount discount = new Discount(14, 15);
+                    Discount discount = new Discount(15, 16, 17);
                     price.applyDiscount(discount);
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage() + " " + e.getCause());

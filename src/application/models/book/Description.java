@@ -3,6 +3,7 @@ package application.models.book;
 import java.time.Year;
 
 public class Description implements Searchable<String>, Comparable<Description>{
+    private int id;
     private String title;
     private BookType type;
     private BookGenre genre;
@@ -10,7 +11,7 @@ public class Description implements Searchable<String>, Comparable<Description>{
     private BookLanguage bookLanguage;
     private Year publicationYear;
 
-    public Description(String title, BookType type, BookGenre genre,
+    public Description(int id, String title, BookType type, BookGenre genre,
                        String pages, BookLanguage bookLanguage, Year publicationYear) {
 
         if(title == null || type == null || genre == null
@@ -25,13 +26,17 @@ public class Description implements Searchable<String>, Comparable<Description>{
         } else if (pages.length() > 4) {
             throw new IllegalArgumentException("pages > 4 digits");
         }
-
+        this.id = id;
         this.title = title;
         this.type = type;
         this.genre = genre;
         this.pages = pages;
         this.bookLanguage = bookLanguage;
         this.publicationYear = publicationYear;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -60,7 +65,14 @@ public class Description implements Searchable<String>, Comparable<Description>{
 
     @Override
     public boolean matched(String keyword) {
-        return title.toLowerCase().compareTo(keyword.toLowerCase()) == 0;
+        if (title.toLowerCase().compareTo(keyword.toLowerCase()) == 0) {
+            return true;
+        } else if (genre.name().toLowerCase().compareTo(keyword.toLowerCase()) == 0) {
+            return true;
+        } else if (bookLanguage.name().toLowerCase().compareTo(keyword.toLowerCase()) == 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

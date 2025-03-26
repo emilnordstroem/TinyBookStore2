@@ -15,11 +15,12 @@ class BookConstructorTest {
         Book book = new Book(
                 new ISBN("xxxxxxxxxxxxx"),
                 new Description(
+                        1,
                         "Test",
-                        Description.Type.HARDCOVER,
-                        Description.Genre.NONFICTION,
+                        BookType.HARDCOVER,
+                        BookGenre.NONFICTION,
                         "0",
-                        Description.Language.DANISH,
+                        BookLanguage.DANISH,
                         Year.now()),
                 new Entities("Test", "Test"),
                 new Dimensions(0, 0, 0),

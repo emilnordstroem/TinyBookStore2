@@ -1,10 +1,12 @@
 package application.models.pricing;
 
 public class Discount implements Discountable {
+    private final int id;
     private int percentage;
     private double threshold;
 
-    public Discount(int percentage, double threshold) {
+    public Discount(int id, int percentage, double threshold) {
+        this.id = id;
         if(percentage < 0 || percentage > 100){
             throw new IllegalArgumentException("Percentage is under 0 or over 100");
         } else if (percentage == 0) {
@@ -12,6 +14,10 @@ public class Discount implements Discountable {
         }
         this.percentage = percentage;
         this.threshold = threshold;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getPercentage() {

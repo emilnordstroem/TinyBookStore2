@@ -8,8 +8,10 @@ import application.models.customer.address.Address;
 import application.models.order.Order;
 import application.models.order.OrderLine;
 import application.models.pricing.Price;
+import application.models.stockManagement.Stock;
 import storage.BookStorage;
 import storage.CustomerStorage;
+import storage.DescriptionStorage;
 import storage.OrderStorage;
 
 import java.util.ArrayList;
@@ -36,9 +38,9 @@ public class Controller {
         return order;
     }
 
-    public static Book createBook(ISBN isbn, Description description, Entities entities, Dimensions dimensions, Price price){
+    public static Book createBook(Stock stock, ISBN isbn, Description description, Entities entities, Dimensions dimensions, Price price){
         Book book = new Book(isbn, description, entities, dimensions, price);
-        BookStorage.addBook(book);
+        BookStorage.addBook(book, stock);
         return book;
     }
 
