@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class DescriptionStorage {
 
+
+
     public static ArrayList<Description> retrieveAllDescriptions(){
         ArrayList<Description> descriptions = new ArrayList<>();
         try{

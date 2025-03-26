@@ -25,22 +25,7 @@ public class BookTableView {
 
         TableColumn<Book, Object> bookDescription = new TableColumn<>();
         bookDescription.setCellValueFactory(book -> {
-            GridPane descriptionBox = new GridPane();
-
-            descriptionBox.add(new Text(book.getValue().getDescription().getTitle()),0,0);
-            descriptionBox.add(new Label(book.getValue().getDescription().getLanguage().name()), 0, 1);
-            // Potential ratings could be implemented here
-            descriptionBox.add(new Label(book.getValue().getDescription().getType().name()), 0,2);
-            HBox pricing = new HBox(
-                    new Label("DKK"),
-                    new Label(String.valueOf(book.getValue().getPrice().getCurrentPrice()))
-            );
-            if(book.getValue().getPrice().getDiscount() != null){
-                pricing.getChildren().add(new Label(String.valueOf(book.getValue().getPrice().getOriginalPrice())));
-            }
-            descriptionBox.add(pricing, 0,3);
-
-            return (ObservableValue) descriptionBox;
+            // TODO -> Need for reconstruction
         });
 
         elementTableView.getColumns().add(bookDescription);
