@@ -13,8 +13,6 @@ import java.util.Objects;
 public class BookStorage {
 
     public static void addBook(Book book, Stock stock) {
-        // TODO - issue of finding out if the discount and description is already in the database
-        // How to properly link a book to an id of a discount or description - retrieve ID?
         try {
 
             Connection connection = DriverManager.getConnection(

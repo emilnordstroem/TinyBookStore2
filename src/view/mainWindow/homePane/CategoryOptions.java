@@ -6,8 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 
+import java.util.ArrayList;
+
 public class CategoryOptions {
     private final HBox chooseCategoryHBox = new HBox();
+    private final ArrayList<Button> categoryButtons = new ArrayList<>();
+    private final int[] prefButtonSize = {100, 50};
 
     public CategoryOptions(int width) {
         setFieldLimits(width);
@@ -25,13 +29,26 @@ public class CategoryOptions {
     }
 
     private void addCategoryButtons(){
-        chooseCategoryHBox.getChildren().add(new Button("DEALS"));
+        Button dealsButton = new Button("DEALS");
+        dealsButton.setPrefSize(prefButtonSize[0], prefButtonSize[1]);
+        chooseCategoryHBox.getChildren().add(dealsButton);
+        categoryButtons.add(dealsButton);
+
         for(BookGenre genre : BookGenre.values()){
-            chooseCategoryHBox.getChildren().add(new Button(genre.name()));
+            Button categoryGenreButton = new Button(genre.name());
+            categoryGenreButton.setPrefSize(prefButtonSize[0],prefButtonSize[1]);
+            chooseCategoryHBox.getChildren().add(categoryGenreButton);
+            categoryButtons.add(categoryGenreButton);
         }
         for(BookLanguage language : BookLanguage.values()){
-            chooseCategoryHBox.getChildren().add(new Button(language.name()));
+            Button categoryLanguageButton = new Button(language.name());
+            categoryLanguageButton.setPrefSize(prefButtonSize[0],prefButtonSize[1]);
+            chooseCategoryHBox.getChildren().add(categoryLanguageButton);
+            categoryButtons.add(categoryLanguageButton);
         }
     }
 
+    public ArrayList<Button> getCategoryButtons() {
+        return categoryButtons;
+    }
 }

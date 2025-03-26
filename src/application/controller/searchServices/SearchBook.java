@@ -1,8 +1,10 @@
 package application.controller.searchServices;
 
-import application.models.book.Book;
-import application.models.book.Searchable;
+import application.models.book.*;
+import application.models.pricing.Price;
 import storage.BookStorage;
+
+import java.time.Year;
 import java.util.List;
 
 public class SearchBook {
@@ -38,6 +40,39 @@ public class SearchBook {
 
     public List<Book> getSearchResults() {
         return searchResults;
+    }
+
+    public List<Book> getMockSearchResults() {
+        return List.of(
+                new Book(
+                        new ISBN("1234567890123"),
+                        new Description(
+                                1,
+                                "MockBook1",
+                                BookType.PAPERBACK,
+                                BookGenre.NONFICTION,
+                                "0",
+                                BookLanguage.DANISH,
+                                Year.now()),
+                        new Entities("Test", "Test"),
+                        new Dimensions(0, 0, 0),
+                        new Price(149)
+                ),
+                new Book(
+                        new ISBN("3210987654321"),
+                        new Description(
+                                2,
+                                "MockBook2",
+                                BookType.HARDCOVER,
+                                BookGenre.FICTION,
+                                "0",
+                                BookLanguage.ENGLISH,
+                                Year.now()),
+                        new Entities("Test", "Test"),
+                        new Dimensions(0, 0, 0),
+                        new Price(349)
+                )
+        );
     }
 
     public void setSearchableItems(List<Book> searchableItems) {
