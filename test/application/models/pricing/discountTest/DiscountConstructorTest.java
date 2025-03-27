@@ -8,14 +8,14 @@ class DiscountConstructorTest {
 
     @Test
     void constructorNoException(){
-        Discount discount = new Discount(25, 0);
+        Discount discount = new Discount(0,25, 0);
         assertNotNull(discount);
     }
 
     @Test
     void constructorNoDifferenceIllegalArgument(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Discount discount = new Discount(0, 500);
+            Discount discount = new Discount(0,0, 500);
         });
         assertEquals("No difference if implemented", exception.getMessage());
     }
@@ -23,7 +23,7 @@ class DiscountConstructorTest {
     @Test
     void constructorPercentageIllegalArgument(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Discount discount = new Discount(101, 0);
+            Discount discount = new Discount(0,101, 0);
         });
         assertEquals("Percentage is under 0 or over 100", exception.getMessage());
     }
@@ -31,7 +31,7 @@ class DiscountConstructorTest {
     @Test
     void constructorNegativValueIllegalArgument(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Discount discount = new Discount(-1, 500);
+            Discount discount = new Discount(0,-1, 500);
         });
         assertEquals("Percentage is under 0 or over 100", exception.getMessage());
     }

@@ -1,5 +1,8 @@
 package application.models.book.descriptionTest;
 
+import application.models.book.BookGenre;
+import application.models.book.BookLanguage;
+import application.models.book.BookType;
 import application.models.book.Description;
 import org.junit.jupiter.api.*;
 
@@ -12,11 +15,12 @@ class DescriptionConstructorTest {
     @Test
     void DescriptionCreatedNoException(){
         Description description = new Description(
+                1,
                 "Title",
-                Description.Type.HARDCOVER,
-                Description.Genre.NONFICTION,
+                BookType.HARDCOVER,
+                BookGenre.NONFICTION,
                 "300",
-                Description.Language.ENGLISH,
+                BookLanguage.ENGLISH,
                 Year.now()
         );
         assertNotNull(description);
@@ -26,11 +30,12 @@ class DescriptionConstructorTest {
     void DescriptionCreatedMissingTitle(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Description description = new Description(
+                    0,
                     "",
-                    Description.Type.HARDCOVER,
-                    Description.Genre.NONFICTION,
+                    BookType.HARDCOVER,
+                    BookGenre.NONFICTION,
                     "300",
-                    Description.Language.ENGLISH,
+                    BookLanguage.ENGLISH,
                     Year.now()
             );
         });
@@ -41,6 +46,7 @@ class DescriptionConstructorTest {
     void DescriptionCreatedNullPointerException(){
         Exception exception = assertThrows(NullPointerException.class, () -> {
             Description description = new Description(
+                    0,
                     null,
                     null,
                     null,
@@ -55,11 +61,12 @@ class DescriptionConstructorTest {
     void DescriptionCreatedNegativePages(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Description description = new Description(
+                    0,
                     "Title",
-                    Description.Type.HARDCOVER,
-                    Description.Genre.NONFICTION,
+                    BookType.HARDCOVER,
+                    BookGenre.NONFICTION,
                     "-1",
-                    Description.Language.ENGLISH,
+                    BookLanguage.ENGLISH,
                     Year.now()
             );
         });
@@ -70,11 +77,12 @@ class DescriptionConstructorTest {
     void DescriptionCreatedDecimalPages(){
         Exception exception = assertThrows(NumberFormatException.class, () -> {
             Description description = new Description(
+                    0,
                     "Title",
-                    Description.Type.HARDCOVER,
-                    Description.Genre.NONFICTION,
+                    BookType.HARDCOVER,
+                    BookGenre.NONFICTION,
                     "30.5",
-                    Description.Language.ENGLISH,
+                    BookLanguage.ENGLISH,
                     Year.now()
             );
         });
@@ -84,11 +92,12 @@ class DescriptionConstructorTest {
     void DescriptionCreatedTooManyPages(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Description description = new Description(
+                    0,
                     "Title",
-                    Description.Type.HARDCOVER,
-                    Description.Genre.NONFICTION,
+                    BookType.HARDCOVER,
+                    BookGenre.NONFICTION,
                     "12345",
-                    Description.Language.ENGLISH,
+                    BookLanguage.ENGLISH,
                     Year.now()
             );
         });

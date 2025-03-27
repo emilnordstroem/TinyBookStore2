@@ -1,5 +1,8 @@
 package application.models.book.descriptionTest;
 
+import application.models.book.BookGenre;
+import application.models.book.BookLanguage;
+import application.models.book.BookType;
 import application.models.book.Description;
 import org.junit.jupiter.api.*;
 
@@ -12,11 +15,12 @@ class DescriptionSearchableTest {
     @BeforeEach
     void createDescriptionObject(){
         description = new Description(
+                0,
             "Title",
-            Description.Type.HARDCOVER,
-            Description.Genre.NONFICTION,
+            BookType.HARDCOVER,
+            BookGenre.NONFICTION,
             "300",
-            Description.Language.ENGLISH,
+            BookLanguage.ENGLISH,
             Year.now()
         );
     }

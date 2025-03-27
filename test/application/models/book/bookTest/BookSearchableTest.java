@@ -15,11 +15,12 @@ class BookSearchableTest {
         book = new Book(
             new ISBN("xxxxxxxxxxxxx"),
             new Description(
+                    0,
                     "Title",
-                    Description.Type.HARDCOVER,
-                    Description.Genre.NONFICTION,
+                    BookType.HARDCOVER,
+                    BookGenre.NONFICTION,
                     "0",
-                    Description.Language.DANISH,
+                    BookLanguage.DANISH,
                     Year.now()),
             new Entities("Author", "Publisher"),
             new Dimensions(0, 0, 0),

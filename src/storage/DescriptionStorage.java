@@ -7,6 +7,7 @@ import application.models.pricing.Price;
 import java.sql.*;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DescriptionStorage {
 
@@ -17,22 +18,23 @@ public class DescriptionStorage {
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
             );
 
-            PreparedStatement addBookStoredProcedure = connection.prepareStatement(
-                    "EXEC PROC AddDescription ?, ?, ?, ?, ?, ?"
+            PreparedStatement addDescriptionStoredProcedure = connection.prepareStatement(
+                    "INSERT INTO Descriptions (title, bookType, genre, pages, bookLanguage, publicationYear) VALUES (?, ?, ?, ?, ?, ?)"
             );
-            addBookStoredProcedure.clearParameters();
+            addDescriptionStoredProcedure.clearParameters();
 
-            try (connection) {
+            try {
                 for (int parameter = 1; parameter <= 6; parameter++) {
                     switch (parameter) {
-                        case 1 -> addBookStoredProcedure.setString(parameter, description.getTitle());
-                        case 2 -> addBookStoredProcedure.setString(parameter, description.getType().name());
-                        case 3 -> addBookStoredProcedure.setString(parameter, description.getGenre().name());
-                        case 4 -> addBookStoredProcedure.setString(parameter, description.getPages());
-                        case 5 -> addBookStoredProcedure.setString(parameter, description.getLanguage().name());
-                        case 6 -> addBookStoredProcedure.setInt(parameter, Integer.parseInt(description.getPublicationYear().toString()));
+                        case 1 -> addDescriptionStoredProcedure.setString(parameter, description.getTitle());
+                        case 2 -> addDescriptionStoredProcedure.setString(parameter, description.getType().name());
+                        case 3 -> addDescriptionStoredProcedure.setString(parameter, description.getGenre().name());
+                        case 4 -> addDescriptionStoredProcedure.setInt(parameter, Integer.parseInt(description.getPages()));
+                        case 5 -> addDescriptionStoredProcedure.setString(parameter, description.getLanguage().name());
+                        case 6 -> addDescriptionStoredProcedure.setInt(parameter, Integer.parseInt(description.getPublicationYear().toString()));
                     }
                 }
+                addDescriptionStoredProcedure.executeUpdate();
             } catch (SQLIntegrityConstraintViolationException e) {
                 System.out.println("Constraint violation: " + e.getMessage());
             } finally {
@@ -54,7 +56,7 @@ public class DescriptionStorage {
             );
 
             PreparedStatement retrieveAllDescriptionsStoredProcedure = connection.prepareStatement(
-                    "{CALL RetrieveAllDescriptions}"
+                    "SELECT * FROM Descriptions"
             );
 
             ResultSet retrievedDescriptions = retrieveAllDescriptionsStoredProcedure.executeQuery();
@@ -67,7 +69,7 @@ public class DescriptionStorage {
                                 BookType.valueOf(retrievedDescriptions.getString(3).toUpperCase()),
                                 BookGenre.valueOf(retrievedDescriptions.getString(4).toUpperCase()),
                                 retrievedDescriptions.getString(5),
-                                BookLanguage.valueOf(retrievedDescriptions.getString(6).toLowerCase()),
+                                BookLanguage.valueOf(retrievedDescriptions.getString(6).toUpperCase()),
                                 Year.of(retrievedDescriptions.getInt(7))
                         )
                 );
@@ -91,7 +93,7 @@ public class DescriptionStorage {
             );
 
             PreparedStatement retrieveDescriptionStoredProcedure = connection.prepareStatement(
-                    "{CALL RetrieveLastDescription}"
+                    "SELECT TOP 1 * FROM Descriptions ORDER BY id DESC"
             );
 
             ResultSet retrievedDescriptions = retrieveDescriptionStoredProcedure.executeQuery();
@@ -103,7 +105,7 @@ public class DescriptionStorage {
                         BookType.valueOf(retrievedDescriptions.getString(3).toUpperCase()),
                         BookGenre.valueOf(retrievedDescriptions.getString(4).toUpperCase()),
                         retrievedDescriptions.getString(5),
-                        BookLanguage.valueOf(retrievedDescriptions.getString(6).toLowerCase()),
+                        BookLanguage.valueOf(retrievedDescriptions.getString(6).toUpperCase()),
                         Year.of(retrievedDescriptions.getInt(7))
                 );
             }

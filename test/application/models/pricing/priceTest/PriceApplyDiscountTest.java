@@ -15,9 +15,9 @@ class PriceApplyDiscountTest {
 
     @Test
     void applyDiscountWithDiscountNoException() {
-        Discount discount = new Discount(20, 0);
+        Discount discount = new Discount(0,20, 0);
         price.applyDiscount(discount);
-        Discount newDiscount = new Discount(50, 0);
+        Discount newDiscount = new Discount(0,50, 0);
         price.applyDiscount(newDiscount);
         double actualResult = price.getDiscount().getPercentage();
         assertEquals(50, actualResult);
@@ -25,7 +25,7 @@ class PriceApplyDiscountTest {
 
     @Test
     void applyDiscountNoDiscountNoException() {
-        Discount discount = new Discount(20, 0);
+        Discount discount = new Discount(0,20, 0);
         price.applyDiscount(discount);
         assertNotNull(price.getDiscount());
     }

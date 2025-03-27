@@ -9,7 +9,7 @@ class DiscountDiscountedPriceTest {
 
     @BeforeEach
     void createDiscount(){
-        discount = new Discount(25, 500);
+        discount = new Discount(0,25, 500);
     }
 
     @Test

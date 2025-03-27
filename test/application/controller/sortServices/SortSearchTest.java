@@ -26,11 +26,12 @@ class SortSearchTest {
                 new Book(
                         new ISBN("1234567891123"),
                         new Description(
+                                0,
                                 bookTitles[bookNo],
-                                Description.Type.HARDCOVER,
-                                Description.Genre.NONFICTION,
+                                BookType.HARDCOVER,
+                                BookGenre.NONFICTION,
                                 "0",
-                                Description.Language.DANISH,
+                                BookLanguage.DANISH,
                                 Year.of(new Random().nextInt(1980, 2025))),
                         new Entities("Test", "Test"),
                         new Dimensions(0, 0, 0),

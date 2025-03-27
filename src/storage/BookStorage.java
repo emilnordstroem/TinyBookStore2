@@ -20,7 +20,7 @@ public class BookStorage {
             );
 
             PreparedStatement addBookStoredProcedure = connection.prepareStatement(
-                    "EXEC PROC AddBook ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"
+                    "INSERT INTO Book VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
             addBookStoredProcedure.clearParameters();
 
@@ -36,10 +36,19 @@ public class BookStorage {
                         case 7 -> addBookStoredProcedure.setDouble(parameter, book.getDimensions().getWidth());
                         case 8 -> addBookStoredProcedure.setInt(parameter, stock.getQuantity().getQuantity());
                         case 9 -> addBookStoredProcedure.setString(parameter, stock.getQuantity().getQuantityStatus().name());
-                        case 10 -> addBookStoredProcedure.setInt(parameter, book.getPrice().getDiscount().getId());
+                        case 10 -> {
+                            if (book.getPrice().getDiscount() != null) {
+                                addBookStoredProcedure.setInt(parameter, book.getPrice().getDiscount().getId());
+                            } else {
+                                addBookStoredProcedure.setNull(parameter, java.sql.Types.INTEGER);
+                            }
+                        }
                         case 11 -> addBookStoredProcedure.setDouble(parameter, book.getPrice().getCurrentPrice());
                     }
                 }
+
+                addBookStoredProcedure.executeUpdate();
+
             } catch (SQLIntegrityConstraintViolationException e) {
                 System.out.println("Constraint violation: " + e.getMessage());
             } finally {
@@ -60,43 +69,47 @@ public class BookStorage {
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
             );
 
-            PreparedStatement retrieveAllBooksStoredProcedure = connection.prepareStatement(
-                    "{CALL RetrieveAllBooks}"
+            PreparedStatement retrieveAllBooks = connection.prepareStatement(
+                    "SELECT * FROM Book INNER JOIN Descriptions ON Book.DescriptionId = Descriptions.id LEFT JOIN Discount ON Discount.id = Book.DiscountId"
             );
 
-            ResultSet retrievedBooks = retrieveAllBooksStoredProcedure.executeQuery();
+            ResultSet retrievedBooks = retrieveAllBooks.executeQuery();
 
             while(retrievedBooks.next()){
                 ISBN isbn = new ISBN(
                         retrievedBooks.getString(1)
                 );
                 Description description = new Description(
-                        retrievedBooks.getInt(2),
-                        retrievedBooks.getString(3),
-                        BookType.valueOf(retrievedBooks.getString(4).toUpperCase()),
-                        BookGenre.valueOf(retrievedBooks.getString(5).toUpperCase()),
-                        retrievedBooks.getString(6),
-                        BookLanguage.valueOf(retrievedBooks.getString(7).toLowerCase()),
-                        Year.of(retrievedBooks.getInt(8))
-                        );
+                        retrievedBooks.getInt(12),
+                        retrievedBooks.getString(13),
+                        BookType.valueOf(retrievedBooks.getString(14).toUpperCase()),
+                        BookGenre.valueOf(retrievedBooks.getString(15).toUpperCase()),
+                        retrievedBooks.getString(16),
+                        BookLanguage.valueOf(retrievedBooks.getString(17).toUpperCase()),
+                        Year.of(retrievedBooks.getInt(18))
+                );
                 Entities entities = new Entities(
-                        retrievedBooks.getString(9),
-                        retrievedBooks.getString(10)
+                        retrievedBooks.getString(3),
+                        retrievedBooks.getString(4)
                 );
                 Dimensions dimensions = new Dimensions(
-                        retrievedBooks.getDouble(11),
-                        retrievedBooks.getDouble(12),
-                        retrievedBooks.getDouble(13)
+                        retrievedBooks.getDouble(5),
+                        retrievedBooks.getDouble(6),
+                        retrievedBooks.getDouble(7)
                 );
-                Price price = new Price(14);
-                try{
-                    Discount discount = new Discount(15, 16, 17);
+                Price price = new Price(
+                        retrievedBooks.getDouble(11)
+                );
+                Integer discountId = (Integer) retrievedBooks.getObject("DiscountId");
+                if(discountId != null){
+                    Discount discount = new Discount(
+                            retrievedBooks.getInt(18),
+                            retrievedBooks.getInt(19),
+                            retrievedBooks.getDouble(20)
+                    );
                     price.applyDiscount(discount);
-                } catch (NullPointerException e) {
-                    System.out.println(e.getMessage() + " " + e.getCause());
-                } finally {
-                    books.add(new Book(isbn, description, entities, dimensions, price));
                 }
+                books.add(new Book(isbn, description, entities, dimensions, price));
             }
 
             connection.close();

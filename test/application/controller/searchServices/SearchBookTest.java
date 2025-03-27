@@ -20,6 +20,7 @@ class SearchBookTest {
             searchableItems.add(new Book(
                 new ISBN("1234567891123"),
                 new Description(
+                        0,
                         String.format("Book%d", bookNo),
                         BookType.HARDCOVER,
                         BookGenre.NONFICTION,
