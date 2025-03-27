@@ -63,6 +63,10 @@ public class Description implements Searchable<String>, Comparable<Description>{
         return publicationYear;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean matched(String keyword) {
         if (title.toLowerCase().compareTo(keyword.toLowerCase()) == 0) {

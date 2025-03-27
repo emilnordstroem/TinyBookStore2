@@ -14,6 +14,7 @@ import storage.CustomerStorage;
 import storage.DescriptionStorage;
 import storage.OrderStorage;
 
+import java.time.Year;
 import java.util.ArrayList;
 
 public class Controller {
@@ -38,7 +39,15 @@ public class Controller {
         return order;
     }
 
+    public static Description createDescription(String title, BookType type, BookGenre genre, String pageNo, BookLanguage language, Year publication){
+        return new Description(0, title, type, genre, pageNo, language, publication);
+    }
+
     public static Book createBook(Stock stock, ISBN isbn, Description description, Entities entities, Dimensions dimensions, Price price){
+        if(description.getId() == 0){
+            DescriptionStorage.addDescription(description);
+            description = DescriptionStorage.retrieveLastDescription();
+        }
         Book book = new Book(isbn, description, entities, dimensions, price);
         BookStorage.addBook(book, stock);
         return book;
