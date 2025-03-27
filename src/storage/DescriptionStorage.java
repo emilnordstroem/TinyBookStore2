@@ -86,7 +86,6 @@ public class DescriptionStorage {
     }
 
     public static Description retrieveLastDescription(){
-        Description descriptions = null;
         try{
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
@@ -98,8 +97,8 @@ public class DescriptionStorage {
 
             ResultSet retrievedDescriptions = retrieveDescriptionStoredProcedure.executeQuery();
 
-            while(retrievedDescriptions.next()){
-                descriptions = new Description(
+            if(retrievedDescriptions.next()){
+                return new Description(
                         retrievedDescriptions.getInt(1),
                         retrievedDescriptions.getString(2),
                         BookType.valueOf(retrievedDescriptions.getString(3).toUpperCase()),
@@ -117,7 +116,8 @@ public class DescriptionStorage {
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
-        return descriptions;
+
+        return null;
     }
 
 }
