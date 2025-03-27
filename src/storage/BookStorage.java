@@ -160,21 +160,21 @@ public class BookStorage {
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
             );
 
-            PreparedStatement retrieveAllBookStocksStoredProcedure = connection.prepareStatement(
-                    "SELECT isbn, quantity, quantityStatus FROM Book"
+            PreparedStatement retrieveBookStock = connection.prepareStatement(
+                    "SELECT isbn, quantity, quantityStatus FROM Book WHERE isbn = ?"
             );
+            retrieveBookStock.clearParameters();
+            retrieveBookStock.setString(1, isbn.getIsbn());
 
-            ResultSet retrievedBookStocks = retrieveAllBookStocksStoredProcedure.executeQuery();
+            ResultSet resultOfretrievedBookStock = retrieveBookStock.executeQuery();
 
-            while(retrievedBookStocks.next()){
-                if(Objects.equals(retrievedBookStocks.getString(1), isbn.getIsbn())){
-                    Stock stock = new Stock(
-                            new ISBN(retrievedBookStocks.getString(1)),
-                            retrievedBookStocks.getInt(2)
-                    );
-                    stock.createQuantity(retrievedBookStocks.getInt(2));
-                    return stock;
-                }
+            if(resultOfretrievedBookStock.next()){
+                Stock stock = new Stock(
+                        new ISBN(resultOfretrievedBookStock.getString(1)),
+                        resultOfretrievedBookStock.getInt(2)
+                );
+                stock.createQuantity(resultOfretrievedBookStock.getInt(2));
+                return stock;
             }
 
             connection.close();
@@ -184,6 +184,7 @@ public class BookStorage {
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+
         return null;
     }
 

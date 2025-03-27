@@ -1,11 +1,7 @@
 package storage;
 
-import application.models.book.*;
 import application.models.pricing.Discount;
-import application.models.pricing.Price;
-
 import java.sql.*;
-import java.time.Year;
 import java.util.ArrayList;
 
 public class DiscountStorage {
@@ -19,7 +15,7 @@ public class DiscountStorage {
             );
 
             PreparedStatement retrieveAllDiscountsStoredProcedure = connection.prepareStatement(
-                    "{CALL RetrieveAllDiscounts}"
+                    "SELECT * FROM Discount"
             );
 
             ResultSet retrievedDiscounts = retrieveAllDiscountsStoredProcedure.executeQuery();
