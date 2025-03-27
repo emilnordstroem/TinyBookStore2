@@ -130,7 +130,7 @@ public class BookStorage {
             );
 
             PreparedStatement retrieveAllBookStocksStoredProcedure = connection.prepareStatement(
-                    "EXEC PROC RetrieveAllBookStocks"
+                    "SELECT isbn, quantity, quantityStatus FROM Book"
             );
 
             ResultSet retrievedBookStocks = retrieveAllBookStocksStoredProcedure.executeQuery();
@@ -161,7 +161,7 @@ public class BookStorage {
             );
 
             PreparedStatement retrieveAllBookStocksStoredProcedure = connection.prepareStatement(
-                    "EXEC PROC RetrieveAllBookStocks"
+                    "SELECT isbn, quantity, quantityStatus FROM Book"
             );
 
             ResultSet retrievedBookStocks = retrieveAllBookStocksStoredProcedure.executeQuery();
