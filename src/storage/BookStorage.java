@@ -8,7 +8,6 @@ import application.models.stockManagement.Stock;
 import java.sql.*;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class BookStorage {
 
@@ -70,7 +69,7 @@ public class BookStorage {
             );
 
             PreparedStatement retrieveAllBooks = connection.prepareStatement(
-                    "SELECT * FROM Book INNER JOIN Descriptions ON Book.DescriptionId = Descriptions.id LEFT JOIN Discount ON Discount.id = Book.DiscountId"
+                    "SELECT * FROM Book INNER JOIN Descriptions ON Book.DescriptionId = Descriptions.id LEFT JOIN Discount ON Discount.id = Book.DiscountId ORDER BY Book.isbn"
             );
 
             ResultSet retrievedBooks = retrieveAllBooks.executeQuery();
@@ -130,7 +129,7 @@ public class BookStorage {
             );
 
             PreparedStatement retrieveAllBookStocksStoredProcedure = connection.prepareStatement(
-                    "SELECT isbn, quantity, quantityStatus FROM Book"
+                    "SELECT isbn, quantity, quantityStatus FROM Book ORDER BY isbn"
             );
 
             ResultSet retrievedBookStocks = retrieveAllBookStocksStoredProcedure.executeQuery();
