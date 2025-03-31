@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 public class DiscountStorage {
 
-    public static void addDiscount(Discount discount){
+    public DiscountStorage() {}
+
+    public void addDiscount(Discount discount){
         try{
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
@@ -29,7 +31,7 @@ public class DiscountStorage {
         }
     }
 
-    public static ArrayList<Discount> retrieveAllDiscounts(){
+    public ArrayList<Discount> retrieveAllDiscounts(){
         ArrayList<Discount> discounts = new ArrayList<>();
 
         try{
@@ -63,7 +65,7 @@ public class DiscountStorage {
         return discounts;
     }
 
-    public static Discount retrieveLastAddedDiscount(){
+    public Discount retrieveLastAddedDiscount(){
         try{
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"

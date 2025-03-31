@@ -11,7 +11,9 @@ import java.util.Locale;
 
 public class DescriptionStorage {
 
-    public static void addDescription(Description description){
+    public DescriptionStorage() {}
+
+    public void addDescription(Description description){
         try {
 
             Connection connection = DriverManager.getConnection(
@@ -48,7 +50,7 @@ public class DescriptionStorage {
         }
     }
 
-    public static ArrayList<Description> retrieveAllDescriptions(){
+    public ArrayList<Description> retrieveAllDescriptions(){
         ArrayList<Description> descriptions = new ArrayList<>();
         try{
             Connection connection = DriverManager.getConnection(
@@ -85,7 +87,7 @@ public class DescriptionStorage {
         return descriptions;
     }
 
-    public static Description retrieveLastDescription(){
+    public Description retrieveLastDescription(){
         try{
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"

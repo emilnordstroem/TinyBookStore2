@@ -6,7 +6,9 @@ import java.sql.*;
 
 public class CustomerStorage {
 
-    public static void addCustomer(Customer customer) {
+    public CustomerStorage() {}
+
+    public void addCustomer(Customer customer) {
         try {
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
@@ -40,7 +42,7 @@ public class CustomerStorage {
         }
     }
 
-    public static void removeCustomer(Customer customer){
+    public void removeCustomer(Customer customer){
         try {
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"

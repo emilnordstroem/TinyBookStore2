@@ -7,7 +7,9 @@ import java.sql.*;
 
 public class OrderStorage {
 
-    public static void addOrder(Order order){
+    public OrderStorage() {}
+
+    public void addOrder(Order order){
         try {
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"
@@ -43,7 +45,7 @@ public class OrderStorage {
         }
     }
 
-    public static void addOrderLine(int orderId, OrderLine orderLine){
+    public void addOrderLine(int orderId, OrderLine orderLine){
         try {
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"

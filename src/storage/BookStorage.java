@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 public class BookStorage {
 
-    public static void addBook(Book book, Stock stock) {
+    public BookStorage() {}
+
+    public void addBook(Book book, Stock stock) {
         try {
 
             Connection connection = DriverManager.getConnection(
@@ -61,7 +63,7 @@ public class BookStorage {
         }
     }
 
-    public static ArrayList<Book> retrieveAllBooks(){
+    public ArrayList<Book> retrieveAllBooks(){
         ArrayList<Book> books = new ArrayList<>();
         try{
             Connection connection = DriverManager.getConnection(
@@ -121,7 +123,7 @@ public class BookStorage {
         return books;
     }
 
-    public static ArrayList<Stock> retrieveAllBookStock(){
+    public ArrayList<Stock> retrieveAllBookStock(){
         ArrayList<Stock> bookStocks = new ArrayList<>();
         try{
             Connection connection = DriverManager.getConnection(
@@ -153,7 +155,7 @@ public class BookStorage {
         return bookStocks;
     }
 
-    public static Stock retrieveBookStock(ISBN isbn){
+    public Stock retrieveBookStock(ISBN isbn){
         try{
             Connection connection = DriverManager.getConnection(
                     "jdbc:sqlserver://LENOVO-THINKPAD\\SQLExpress;databaseName=TinyBookStore;user=sa;password=131202;"

@@ -9,47 +9,57 @@ import application.models.order.Order;
 import application.models.order.OrderLine;
 import application.models.pricing.Price;
 import application.models.stockManagement.Stock;
-import storage.BookStorage;
-import storage.CustomerStorage;
-import storage.DescriptionStorage;
-import storage.OrderStorage;
+import storage.*;
 
 import java.time.Year;
 import java.util.ArrayList;
 
 public class Controller {
+    BookStorage bookStorage;
+    CustomerStorage customerStorage;
+    DescriptionStorage descriptionStorage;
+    DiscountStorage discountStorage;
+    OrderStorage orderStorage;
 
-    public static Customer createCustomer(String firstName, String lastName, int phoneNo, String email, Address address){
+    public Controller() {
+        bookStorage = new BookStorage();
+        customerStorage = new CustomerStorage();
+        descriptionStorage = new DescriptionStorage();
+        discountStorage = new DiscountStorage();
+        orderStorage = new OrderStorage();
+    }
+
+    public Customer createCustomer(String firstName, String lastName, int phoneNo, String email, Address address){
         CustomerDetails details = new CustomerDetails(firstName, lastName, phoneNo, email);
         Customer customer = new Customer(details, address, new ArrayList<>());
-        CustomerStorage.addCustomer(customer);
+        customerStorage.addCustomer(customer);
         return customer;
     }
 
-    public static void removeCustomer(Customer customer){
-        CustomerStorage.removeCustomer(customer);
+    public void removeCustomer(Customer customer){
+        customerStorage.removeCustomer(customer);
     }
 
-    public static Order createOrder(Customer customer){
+    public Order createOrder(Customer customer){
         Order order = customer.createOrder(new OrderPlacementService());
-        OrderStorage.addOrder(order);
+        orderStorage.addOrder(order);
         for(OrderLine orderLine : order.getOrderLines()){
-            OrderStorage.addOrderLine(order.getId(), orderLine);
+            orderStorage.addOrderLine(order.getId(), orderLine);
         }
         return order;
     }
 
-    public static Description createDescription(String title, BookType type, BookGenre genre, String pageNo, BookLanguage language, Year publication){
+    public Description createDescription(String title, BookType type, BookGenre genre, String pageNo, BookLanguage language, Year publication){
         return new Description(0, title, type, genre, pageNo, language, publication);
     }
 
-    public static Book createBook(Stock stock, ISBN isbn, Description description, Entities entities, Dimensions dimensions, Price price){
+    public Book createBook(Stock stock, ISBN isbn, Description description, Entities entities, Dimensions dimensions, Price price){
         if(description.getId() == 0){
-            DescriptionStorage.addDescription(description);
-            description = DescriptionStorage.retrieveLastDescription();
+            descriptionStorage.addDescription(description);
+            description = descriptionStorage.retrieveLastDescription();
         }
         Book book = new Book(isbn, description, entities, dimensions, price);
-        BookStorage.addBook(book, stock);
+        bookStorage.addBook(book, stock);
         return book;
     }
 
