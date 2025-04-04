@@ -3,9 +3,7 @@ package application.models.customer;
 import application.controller.processingServices.OrderPlacementService;
 import application.models.customer.address.Address;
 import application.models.order.Order;
-import application.models.order.OrderLine;
 import application.models.user.User;
-import storage.OrderStorage;
 
 import java.util.ArrayList;
 import java.util.List;

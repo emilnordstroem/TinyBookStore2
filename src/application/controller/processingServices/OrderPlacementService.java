@@ -1,5 +1,6 @@
 package application.controller.processingServices;
 
+import application.models.book.Book;
 import application.models.book.ISBN;
 import application.models.customer.Customer;
 import application.models.order.Order;
@@ -12,6 +13,11 @@ import storage.BookStorage;
 import java.util.ArrayList;
 
 public class OrderPlacementService {
+    private final BookStorage bookStorage;
+
+    public OrderPlacementService() {
+        bookStorage = new BookStorage();
+    }
 
     public Order placeOrder(Customer customer){
         if(customer == null){
@@ -34,7 +40,7 @@ public class OrderPlacementService {
         if(isbn == null){
             throw new NullPointerException("isbn == null");
         }
-        Stock stock = BookStorage.retrieveBookStock(isbn);
+        Stock stock = bookStorage.retrieveBookStock(isbn);
         if(stock.getQuantity() == null){
             throw new NullPointerException("stock.getQuantity == null");
         }

@@ -16,7 +16,8 @@ public class SearchBook {
         if(searchWord == null){
             throw new NullPointerException("searchWord == null");
         }
-        this.searchableItems = BookStorage.retrieveAllBooks();
+        BookStorage bookStorage = new BookStorage();
+        this.searchableItems = bookStorage.retrieveAllBooks();
         this.searchWord = searchWord;
     }
 
